@@ -1,0 +1,5 @@
+@startuml hello world 
+
+A -> B : hello world
+
+@enduml
