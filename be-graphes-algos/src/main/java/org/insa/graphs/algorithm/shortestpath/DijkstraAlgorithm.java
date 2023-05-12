@@ -2,7 +2,6 @@ package org.insa.graphs.algorithm.shortestpath;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 import org.insa.graphs.algorithm.AbstractSolution.Status;
 import org.insa.graphs.algorithm.utils.BinaryHeap;
@@ -33,6 +32,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
          Label[] tableauLabel = new Label[nbLabels];
          Node orgNode = data.getOrigin(); // origin Node 
          //initialiser le tableau de labels
+         
          for(Node node :graph.getNodes()) {
          	tableauLabel[node .getId()]=NewLabel(node,false,null,data);
          		}	
@@ -58,6 +58,7 @@ public class DijkstraAlgorithm extends ShortestPathAlgorithm {
          	if(X.getCost() == Double.MAX_VALUE ) {
          		break;
          	}
+    
           // on supprime le min du tas et on le marque 
          	else {	
          		X.setMarque(true);
