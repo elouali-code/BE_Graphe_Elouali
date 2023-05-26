@@ -9,6 +9,8 @@ public class Label implements Comparable<Label>{
    private Node sommet;
    protected double cout;
    private Arc père ;
+   private boolean inTas; // vrai si le noeud a été mis dans le tas
+
    
    public Label(Node sommet, boolean marque, Arc père) {
 	   this.sommet=sommet;
@@ -23,6 +25,7 @@ public class Label implements Comparable<Label>{
 		return this.marque;
 	}
 
+   // return true si le noeud a été marqué 
 	public void setMarque(boolean marque) {
 		this.marque = marque;
 	}
@@ -60,10 +63,17 @@ public class Label implements Comparable<Label>{
 	  return this.cout;
   }
 
-
+	/* Retourne true si le noeud a été mis dans le tas */
+	public boolean getInTas() {
+		return this.inTas;
+	}	
+	
+	public void setInTas() {
+		this.inTas = true;
+	}
 
 @Override
-//Comparer 2 couts 
+//Comparer les deux label selon leur couts 
  public int compareTo(Label label) {
 	int comparaison=Double.compare(this.getTotalCost(), label.getTotalCost());
 			return comparaison;
@@ -72,3 +82,4 @@ public class Label implements Comparable<Label>{
    
 
 }
+

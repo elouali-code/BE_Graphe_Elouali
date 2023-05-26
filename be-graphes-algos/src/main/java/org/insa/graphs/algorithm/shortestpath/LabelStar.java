@@ -14,6 +14,7 @@ public class LabelStar  extends Label{
 		
 
 		this.coutDest = Point.distance(sommet.getPoint(), data.getDestination().getPoint());
+		
 
 	}
 	
