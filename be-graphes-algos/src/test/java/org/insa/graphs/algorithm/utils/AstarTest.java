@@ -6,8 +6,8 @@ import java.io.DataInputStream;
 import java.io.FileInputStream;
 import org.insa.graphs.algorithm.ArcInspector;
 import org.insa.graphs.algorithm.ArcInspectorFactory;
+import org.insa.graphs.algorithm.shortestpath.AStarAlgorithm;
 import org.insa.graphs.algorithm.shortestpath.BellmanFordAlgorithm;
-import org.insa.graphs.algorithm.shortestpath.DijkstraAlgorithm;
 import org.insa.graphs.algorithm.shortestpath.ShortestPathData;
 import org.insa.graphs.algorithm.shortestpath.ShortestPathSolution;
 import org.insa.graphs.model.Graph;
@@ -16,8 +16,7 @@ import org.insa.graphs.model.io.GraphReader;
 import org.junit.Test;
 
 
-public class DijkstraTest {
-
+public class AstarTest {
 	public void testScenario(String mapName, int Mode) throws Exception {
 		// Create a graph reader.
 		GraphReader reader = new BinaryGraphReader(
@@ -32,14 +31,14 @@ public class DijkstraTest {
 		if (Mode != 0 && Mode != 1) {
 			System.out.println("les argument invalide");
 		} else {
-			ArcInspector arcInspectorDijkstra;
+			ArcInspector arcInspectorAstar;
 	
 			if (Mode == 0) { // Temps
 				System.out.println("le Mode : Temps");
-				arcInspectorDijkstra = ArcInspectorFactory.getAllFilters().get(2);
+				arcInspectorAstar = ArcInspectorFactory.getAllFilters().get(2);
 			} else {
 				System.out.println("le Mode : Distance");
-				arcInspectorDijkstra = ArcInspectorFactory.getAllFilters().get(0);
+				arcInspectorAstar = ArcInspectorFactory.getAllFilters().get(0);
 			}
 	
 			System.out.println("--> Chemin de la carte : " + mapName);
@@ -57,13 +56,13 @@ public class DijkstraTest {
 					System.out.println("Cout solution = 0");
 				} else {
 					ShortestPathData data = new ShortestPathData(graph, graph.get(origine), graph.get(destination),
-							arcInspectorDijkstra);
+							arcInspectorAstar);
 	
 					BellmanFordAlgorithm B = new BellmanFordAlgorithm(data);
-					DijkstraAlgorithm D = new DijkstraAlgorithm(data);
+					AStarAlgorithm A = new AStarAlgorithm(data);
 	
 					// Recuperation des solutions de Bellman et Dijkstra
-					ShortestPathSolution solution = D.run();
+					ShortestPathSolution solution = A.run();
 					ShortestPathSolution attendu = B.run();
 	
 					// ya pas de PCC
@@ -93,7 +92,6 @@ public class DijkstraTest {
 			}
 		}
 	}
-
 			public void testScenario2(String mapName, int Mode, int origine, int destination) throws Exception {
 
 				// Create a graph reader.
@@ -116,14 +114,14 @@ public class DijkstraTest {
 						System.out.println("ERREUR : Paramètres invalides ");
 						
 					} else {
-						ArcInspector arcInspectorDijkstra;
+						ArcInspector arcInspectorAstar;
 						
 						if (Mode == 0) { //Temps
 							System.out.println("le Mode : Temps");
-							arcInspectorDijkstra = ArcInspectorFactory.getAllFilters().get(2);
+							arcInspectorAstar = ArcInspectorFactory.getAllFilters().get(2);
 						} else {
 							System.out.println("le Mode : Distance");
-							arcInspectorDijkstra = ArcInspectorFactory.getAllFilters().get(0);
+							arcInspectorAstar = ArcInspectorFactory.getAllFilters().get(0);
 						}
 						
 						
@@ -136,13 +134,13 @@ public class DijkstraTest {
 							System.out.println("Cout solution = 0");
 							
 						} else {			
-							ShortestPathData data = new ShortestPathData(graph, graph.get(origine),graph.get(destination), arcInspectorDijkstra);
+							ShortestPathData data = new ShortestPathData(graph, graph.get(origine),graph.get(destination), arcInspectorAstar);
 				
 							BellmanFordAlgorithm B = new BellmanFordAlgorithm(data);
-							DijkstraAlgorithm D = new DijkstraAlgorithm(data);
+							AStarAlgorithm A = new AStarAlgorithm(data);
 							
 							// Recuperation des solutions de Bellman et Dijkstra 
-							ShortestPathSolution solution = D.run();
+							ShortestPathSolution solution = A.run();
 							ShortestPathSolution attendu = B.run();
 			
 							// ya pas de PCC
@@ -179,14 +177,14 @@ public class DijkstraTest {
 
 
 				String mapName = "C:\\Users\\Administrateur\\OneDrive\\Bureau\\BE_Graphe_Elouali\\cartes\\INSA.mapgr";
-				DijkstraTest test = new  DijkstraTest();
+				AstarTest test = new  AstarTest();
 				System.out.println("\n *****************  Cas d'un chemin simple *****************  \n ");
 
 				test.testScenario(mapName, 1); ///Temps
-				System.out.println(" Dijkstra - Temps ");
+				System.out.println("Astar - Temps ");
 
 				//test.testScenario(mapName, 0); //distance
-				//System.out.println(" Dijkstra - distance ");
+				//System.out.println("Astar - distance ");
 
 
 			
@@ -196,7 +194,7 @@ public class DijkstraTest {
 				
 				String mapName = "C:\\Users\\Administrateur\\OneDrive\\Bureau\\BE_Graphe_Elouali\\cartes\\bordeaux.mapgr";
 				
-				DijkstraTest test = new  DijkstraTest();
+				AstarTest test = new  AstarTest();
 				int origine;
 				int destination;
 
@@ -239,7 +237,7 @@ public class DijkstraTest {
 			public void SenarioTempsbordeauxTest() throws Exception {
 
 
-				DijkstraTest test = new  DijkstraTest();
+				AstarTest test = new  AstarTest();
 
 				String mapName = "C:\\Users\\Administrateur\\OneDrive\\Bureau\\BE_Graphe_Elouali\\cartes\\bordeaux.mapgr";	
 				int origine;
@@ -277,10 +275,10 @@ public class DijkstraTest {
 
 			
 			public static void main(String[] args) throws Exception {
-				DijkstraTest dijkstraTest = new DijkstraTest();
-				//dijkstraTest.SenarioDistancebordeauxTest();
-				//dijkstraTest.SenarioTempsbordeauxTest();
-				dijkstraTest.Test();
+				AstarTest Astartest = new  AstarTest();
+				//Astartest.SenarioDistancebordeauxTest();
+				//Astartest.SenarioTempsbordeauxTest();
+				Astartest.Test();
 
 			}
 	}
